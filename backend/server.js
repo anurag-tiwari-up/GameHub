@@ -16,7 +16,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/tictactoe')
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/')
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
 
