@@ -1,4 +1,4 @@
-const API_URL = 'https://gamehub-backend-sjzb.onrender.com';
+const API_URL = 'https://gamehub-backend-sjzb.onrender.com/api';
 
 export const register = async (userData) => {
   const response = await fetch(`${API_URL}/auth/register`, {
