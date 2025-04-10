@@ -99,6 +99,29 @@ body {
   transform: translateY(-50%);
 }
 
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.nav-buttons.open {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: var(--header-bg);
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
 /* Base button styles */
 .button {
   padding: 0.75rem 1.5rem;
@@ -232,12 +255,6 @@ body.dark-mode .logo-second {
 .menu-icon {
   display: block;
   line-height: 1;
-}
-
-.nav-buttons {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
 }
 
 .auth-buttons, .header-buttons {
@@ -385,13 +402,18 @@ body.dark-mode .game h2 {
     display: block;
   }
 
+  .header-controls {
+    position: static;
+    transform: none;
+  }
+
   .nav-buttons {
     display: none;
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
-    background-color: white;
+    background-color: var(--header-bg);
     padding: 1rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1000;

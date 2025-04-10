@@ -46,30 +46,30 @@ const AppContent = () => {
                 <span className="logo-second">Hub</span>
               </h1>
             </div>
-            <div className="header-controls">
-              <button 
-                className="button primary-button theme-toggle"
-                onClick={toggleTheme}
-                aria-label="Toggle dark mode"
-              >
-                {isDarkMode ? '☀️' : '🌙'}
-              </button>
-              {!isWelcomePage && (
-                <button className="menu-button" onClick={toggleMenu}>
-                  <span className="menu-icon">☰</span>
-                </button>
-              )}
-            </div>
-            {!isWelcomePage && (
-              <div className={`nav-buttons ${isMenuOpen ? 'open' : ''}`}>
+            {!isWelcomePage ? (
+              <div className="nav-buttons">
                 {user ? (
                   <div className="header-buttons">
+                    <button 
+                      className="button primary-button theme-toggle"
+                      onClick={toggleTheme}
+                      aria-label="Toggle dark mode"
+                    >
+                      {isDarkMode ? '☀️' : '🌙'}
+                    </button>
                     <Link to="/profile" className="button primary-button" onClick={() => setIsMenuOpen(false)}>
                       Profile
                     </Link>
                   </div>
                 ) : (
                   <div className="auth-buttons">
+                    <button 
+                      className="button primary-button theme-toggle"
+                      onClick={toggleTheme}
+                      aria-label="Toggle dark mode"
+                    >
+                      {isDarkMode ? '☀️' : '🌙'}
+                    </button>
                     {!isLoginPage && (
                       <Link to="/login" className="button primary-button" onClick={() => setIsMenuOpen(false)}>
                         Login
@@ -82,6 +82,16 @@ const AppContent = () => {
                     )}
                   </div>
                 )}
+              </div>
+            ) : (
+              <div className="header-controls">
+                <button 
+                  className="button primary-button theme-toggle"
+                  onClick={toggleTheme}
+                  aria-label="Toggle dark mode"
+                >
+                  {isDarkMode ? '☀️' : '🌙'}
+                </button>
               </div>
             )}
           </div>
