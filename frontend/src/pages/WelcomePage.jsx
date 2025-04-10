@@ -4,7 +4,9 @@ import './WelcomePage.css';
 const WelcomePage = () => {
   return (
     <div className="welcome-container">
-      <h1>Welcome to GameHub</h1>
+      <h1>
+        Welcome to <span className="logo-first">Game</span><span className="logo-second">Hub</span>
+      </h1>
       <p className="welcome-text">
         Step into a world of classic games with a modern twist! Challenge friends in Tic Tac Toe, 
         test your luck in Rock Paper Scissors, and climb the leaderboard to become the ultimate champion. 

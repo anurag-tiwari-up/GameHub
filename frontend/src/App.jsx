@@ -47,6 +47,13 @@ const AppContent = () => {
               </h1>
             </div>
             <div className="header-controls">
+              <button 
+                className="button primary-button theme-toggle"
+                onClick={toggleTheme}
+                aria-label="Toggle dark mode"
+              >
+                {isDarkMode ? '☀️' : '🌙'}
+              </button>
               {!isWelcomePage && (
                 <button className="menu-button" onClick={toggleMenu}>
                   <span className="menu-icon">☰</span>
@@ -63,13 +70,6 @@ const AppContent = () => {
                   </div>
                 ) : (
                   <div className="auth-buttons">
-                    <button 
-                      className="button primary-button theme-toggle"
-                      onClick={toggleTheme}
-                      aria-label="Toggle dark mode"
-                    >
-                      {isDarkMode ? '☀️' : '🌙'}
-                    </button>
                     {!isLoginPage && (
                       <Link to="/login" className="button primary-button" onClick={() => setIsMenuOpen(false)}>
                         Login
