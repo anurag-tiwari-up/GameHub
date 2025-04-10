@@ -12,7 +12,7 @@ const GamesSelection = () => {
       image: '🎮'
     },
     {
-      id: 'rockpaperscissors',
+      id: 'rps',
       name: 'Rock Paper Scissors',
       description: 'Test your luck against the computer',
       image: '✊'
@@ -20,7 +20,7 @@ const GamesSelection = () => {
   ];
 
   const handleGameSelect = (gameId) => {
-    navigate(`/play/${gameId}`);
+    navigate(`/${gameId}`);
   };
 
   return (

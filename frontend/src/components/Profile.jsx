@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import './Profile.css';
 
 const Profile = () => {
-  const { user, updateUser } = useAuth();
+  const { user, updateUser, logout } = useAuth();
+  const navigate = useNavigate();
   console.log('Current user in Profile:', user);
   console.log('User stats:', user?.stats);
   const [isEditing, setIsEditing] = useState(false);
@@ -39,6 +41,11 @@ const Profile = () => {
     }
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
   const calculateWinRate = (stats) => {
     if (!stats?.gamesPlayed) return 0;
     const totalGames = stats.gamesPlayed;
@@ -66,14 +73,20 @@ const Profile = () => {
   return (
     <div className="profile-container">
       <div className="profile-header">
-        {!isEditing && (
+        <div className="header-buttons">
           <button 
-            className="edit-button"
+            className="button primary-button"
             onClick={() => setIsEditing(true)}
           >
-            Edit Profile
+            Edit
           </button>
-        )}
+          <button 
+            className="button danger-button"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+        </div>
       </div>
 
       {error && <div className="error-message">{error}</div>}
@@ -108,12 +121,12 @@ const Profile = () => {
             />
           </div>
           <div className="form-actions">
-            <button type="submit" className="save-button">
+            <button type="submit" className="button primary-button">
               Save Changes
             </button>
             <button 
               type="button" 
-              className="cancel-button"
+              className="button danger-button"
               onClick={() => {
                 setIsEditing(false);
                 setFormData({

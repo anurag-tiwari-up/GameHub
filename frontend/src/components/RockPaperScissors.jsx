@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import './RockPaperScissors.css';
 
 const RockPaperScissors = () => {
   const { updateGameStats } = useAuth();
+  const navigate = useNavigate();
   const [playerChoice, setPlayerChoice] = useState(null);
   const [computerChoice, setComputerChoice] = useState(null);
   const [result, setResult] = useState(null);
@@ -96,7 +98,13 @@ const RockPaperScissors = () => {
 
   return (
     <div className="rps-game">
-      <h1>Rock Paper Scissors (Best of 3)</h1>
+      <button 
+        className="back-button"
+        onClick={() => navigate('/')}
+      >
+        ← Back to Games
+      </button>
+      <h2>Rock Paper Scissors</h2>
       
       <div className="score-board">
         <div className="score-display">
