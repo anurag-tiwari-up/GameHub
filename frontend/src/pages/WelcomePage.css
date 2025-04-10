@@ -21,10 +21,11 @@
   max-width: 600px;
 }
 
-.welcome-buttons {
-  display: flex;
-  gap: 1rem;
+.continue-button {
+  padding: 1rem 3rem;
+  font-size: 1.25rem;
   margin-top: 2rem;
+  min-width: 200px;
 }
 
 @media (max-width: 768px) {
@@ -36,8 +37,7 @@
     font-size: 1.1rem;
   }
 
-  .welcome-buttons {
-    flex-direction: column;
+  .continue-button {
     width: 100%;
     max-width: 300px;
   }

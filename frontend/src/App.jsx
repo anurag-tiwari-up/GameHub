@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { useState } from 'react';
@@ -26,6 +26,8 @@ const AppContent = () => {
   const { user } = useAuth();
   const { isDarkMode, toggleTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  const isWelcomePage = location.pathname === '/' && !user;
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -43,35 +45,39 @@ const AppContent = () => {
               </h1>
             </div>
             <div className="header-controls">
-              <button className="menu-button" onClick={toggleMenu}>
-                <span className="menu-icon">☰</span>
+              <button 
+                className="button primary-button theme-toggle"
+                onClick={toggleTheme}
+                aria-label="Toggle dark mode"
+              >
+                {isDarkMode ? '☀️' : '🌙'}
               </button>
-            </div>
-            <div className={`nav-buttons ${isMenuOpen ? 'open' : ''}`}>
-              {user ? (
-                <div className="header-buttons">
-                  <button 
-                    className="button primary-button theme-toggle"
-                    onClick={toggleTheme}
-                    aria-label="Toggle dark mode"
-                  >
-                    {isDarkMode ? '☀️' : '🌙'}
-                  </button>
-                  <Link to="/profile" className="button primary-button" onClick={() => setIsMenuOpen(false)}>
-                    Profile
-                  </Link>
-                </div>
-              ) : (
-                <div className="auth-buttons">
-                  <Link to="/login" className="button primary-button" onClick={() => setIsMenuOpen(false)}>
-                    Login
-                  </Link>
-                  <Link to="/signup" className="button primary-button" onClick={() => setIsMenuOpen(false)}>
-                    Sign Up
-                  </Link>
-                </div>
+              {!isWelcomePage && (
+                <button className="menu-button" onClick={toggleMenu}>
+                  <span className="menu-icon">☰</span>
+                </button>
               )}
             </div>
+            {!isWelcomePage && (
+              <div className={`nav-buttons ${isMenuOpen ? 'open' : ''}`}>
+                {user ? (
+                  <div className="header-buttons">
+                    <Link to="/profile" className="button primary-button" onClick={() => setIsMenuOpen(false)}>
+                      Profile
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="auth-buttons">
+                    <Link to="/login" className="button primary-button" onClick={() => setIsMenuOpen(false)}>
+                      Login
+                    </Link>
+                    <Link to="/signup" className="button primary-button" onClick={() => setIsMenuOpen(false)}>
+                      Sign Up
+                    </Link>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </header>
