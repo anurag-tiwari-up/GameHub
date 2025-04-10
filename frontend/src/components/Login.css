@@ -2,14 +2,16 @@
   max-width: 400px;
   margin: 2rem auto;
   padding: 2rem;
-  background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .login-container h2 {
   text-align: center;
-  color: #333;
+  color: #000000;
   margin-bottom: 1.5rem;
 }
 
@@ -20,7 +22,7 @@
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
-  color: #555;
+  color: #000000;
 }
 
 .form-group input {
@@ -29,6 +31,8 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 1rem;
+  background-color: #f0f2f5;
+  color: #000000;
 }
 
 .form-group input:focus {
@@ -65,7 +69,7 @@ button:hover {
 .switch-form {
   text-align: center;
   margin-top: 1rem;
-  color: #666;
+  color: #000000;
 }
 
 .switch-form a {
@@ -75,4 +79,31 @@ button:hover {
 
 .switch-form a:hover {
   text-decoration: underline;
+}
+
+.dark-mode .login-container {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .login-container h2,
+.dark-mode .form-group label,
+.dark-mode .form-group input,
+.dark-mode .switch-form {
+  color: #ffffff;
+}
+
+.dark-mode .form-group input {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.dark-mode .form-group input:focus {
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .switch-form a {
+  color: #4a90e2;
 } 

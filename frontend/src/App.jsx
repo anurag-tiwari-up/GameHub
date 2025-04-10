@@ -46,44 +46,7 @@ const AppContent = () => {
                 <span className="logo-second">Hub</span>
               </h1>
             </div>
-            {!isWelcomePage ? (
-              <div className="nav-buttons">
-                {user ? (
-                  <div className="header-buttons">
-                    <button 
-                      className="button primary-button theme-toggle"
-                      onClick={toggleTheme}
-                      aria-label="Toggle dark mode"
-                    >
-                      {isDarkMode ? '☀️' : '🌙'}
-                    </button>
-                    <Link to="/profile" className="button primary-button" onClick={() => setIsMenuOpen(false)}>
-                      Profile
-                    </Link>
-                  </div>
-                ) : (
-                  <div className="auth-buttons">
-                    <button 
-                      className="button primary-button theme-toggle"
-                      onClick={toggleTheme}
-                      aria-label="Toggle dark mode"
-                    >
-                      {isDarkMode ? '☀️' : '🌙'}
-                    </button>
-                    {!isLoginPage && (
-                      <Link to="/login" className="button primary-button" onClick={() => setIsMenuOpen(false)}>
-                        Login
-                      </Link>
-                    )}
-                    {!isSignupPage && (
-                      <Link to="/signup" className="button primary-button" onClick={() => setIsMenuOpen(false)}>
-                        Sign Up
-                      </Link>
-                    )}
-                  </div>
-                )}
-              </div>
-            ) : (
+            {!isWelcomePage && (
               <div className="header-controls">
                 <button 
                   className="button primary-button theme-toggle"
@@ -92,6 +55,35 @@ const AppContent = () => {
                 >
                   {isDarkMode ? '☀️' : '🌙'}
                 </button>
+                <button 
+                  className="button primary-button menu-button"
+                  onClick={toggleMenu}
+                  aria-label="Toggle menu"
+                >
+                  {isMenuOpen ? '✕' : '☰'}
+                </button>
+                <div className={`nav-buttons ${isMenuOpen ? 'open' : ''}`}>
+                  {user ? (
+                    <div className="header-buttons">
+                      <Link to="/profile" className="button primary-button" onClick={() => setIsMenuOpen(false)}>
+                        Profile
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="auth-buttons">
+                      {!isLoginPage && (
+                        <Link to="/login" className="button primary-button" onClick={() => setIsMenuOpen(false)}>
+                          Login
+                        </Link>
+                      )}
+                      {!isSignupPage && (
+                        <Link to="/signup" className="button primary-button" onClick={() => setIsMenuOpen(false)}>
+                          Sign Up
+                        </Link>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </div>

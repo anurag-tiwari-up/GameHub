@@ -93,20 +93,29 @@ body {
   display: flex;
   align-items: center;
   gap: 1rem;
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
 .nav-buttons {
   display: flex;
   align-items: center;
   gap: 1rem;
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+}
+
+.header-buttons, .auth-buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.theme-toggle {
+  width: 20px !important;
+  min-width: 20px !important;
+  height: 40px;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-buttons.open {
@@ -196,11 +205,6 @@ body {
 }
 
 /* Update specific button styles */
-.theme-toggle {
-  min-width: 44px;
-  padding: 0;
-}
-
 .choice-btn {
   min-width: 100px;
 }
@@ -255,12 +259,6 @@ body.dark-mode .logo-second {
 .menu-icon {
   display: block;
   line-height: 1;
-}
-
-.auth-buttons, .header-buttons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
 }
 
 main {
@@ -398,25 +396,41 @@ body.dark-mode .game h2 {
     padding: 0.5rem 0;
   }
 
-  .menu-button {
-    display: block;
+  .header-content {
+    position: relative;
   }
 
   .header-controls {
-    position: static;
-    transform: none;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .theme-toggle, .menu-button {
+    width: 40px !important;
+    min-width: 40px !important;
+    height: 40px;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .nav-buttons {
     display: none;
     position: absolute;
     top: 100%;
-    left: 0;
     right: 0;
     background-color: var(--header-bg);
     padding: 1rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    min-width: 200px;
+    border-radius: 8px;
   }
 
   .nav-buttons.open {
