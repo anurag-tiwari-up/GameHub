@@ -28,6 +28,8 @@ const AppContent = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const isWelcomePage = location.pathname === '/' && !user;
+  const isLoginPage = location.pathname === '/login';
+  const isSignupPage = location.pathname === '/signup';
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -45,13 +47,6 @@ const AppContent = () => {
               </h1>
             </div>
             <div className="header-controls">
-              <button 
-                className="button primary-button theme-toggle"
-                onClick={toggleTheme}
-                aria-label="Toggle dark mode"
-              >
-                {isDarkMode ? '☀️' : '🌙'}
-              </button>
               {!isWelcomePage && (
                 <button className="menu-button" onClick={toggleMenu}>
                   <span className="menu-icon">☰</span>
@@ -68,12 +63,23 @@ const AppContent = () => {
                   </div>
                 ) : (
                   <div className="auth-buttons">
-                    <Link to="/login" className="button primary-button" onClick={() => setIsMenuOpen(false)}>
-                      Login
-                    </Link>
-                    <Link to="/signup" className="button primary-button" onClick={() => setIsMenuOpen(false)}>
-                      Sign Up
-                    </Link>
+                    <button 
+                      className="button primary-button theme-toggle"
+                      onClick={toggleTheme}
+                      aria-label="Toggle dark mode"
+                    >
+                      {isDarkMode ? '☀️' : '🌙'}
+                    </button>
+                    {!isLoginPage && (
+                      <Link to="/login" className="button primary-button" onClick={() => setIsMenuOpen(false)}>
+                        Login
+                      </Link>
+                    )}
+                    {!isSignupPage && (
+                      <Link to="/signup" className="button primary-button" onClick={() => setIsMenuOpen(false)}>
+                        Sign Up
+                      </Link>
+                    )}
                   </div>
                 )}
               </div>
