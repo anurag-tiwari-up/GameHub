@@ -1,0 +1,44 @@
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  text-align: center;
+  padding: 2rem;
+}
+
+.welcome-container h1 {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+}
+
+.welcome-text {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  color: var(--text-color);
+  max-width: 600px;
+}
+
+.welcome-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .welcome-container h1 {
+    font-size: 2.5rem;
+  }
+
+  .welcome-text {
+    font-size: 1.1rem;
+  }
+
+  .welcome-buttons {
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+  }
+} 

@@ -9,6 +9,7 @@ import TicTacToeMode from './components/TicTacToeMode';
 import RockPaperScissors from './components/RockPaperScissors';
 import Profile from './components/Profile';
 import Leaderboard from './components/Leaderboard';
+import WelcomePage from './pages/WelcomePage';
 import './App.css';
 
 const ProtectedRoute = ({ children }) => {
@@ -77,16 +78,9 @@ const AppContent = () => {
       <main>
         <div className="container">
           <Routes>
+            <Route path="/" element={user ? <GamesSelection /> : <WelcomePage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route
-              path="/"
-              element={
-                <ProtectedRoute>
-                  <GamesSelection />
-                </ProtectedRoute>
-              }
-            />
             <Route
               path="/tictactoe"
               element={
