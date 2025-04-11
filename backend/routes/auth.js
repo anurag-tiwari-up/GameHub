@@ -169,4 +169,36 @@ router.put('/stats', async (req, res) => {
   }
 });
 
+// Get leaderboard data
+router.get('/leaderboard', async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+      return res.status(401).json({ message: 'No token provided' });
+    }
+
+    // Verify token but don't need the decoded data
+    jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+
+    // Get all users with their stats
+    const users = await User.find({}, 'name stats')
+      .sort({ 'stats.tictactoe.wins': -1, 'stats.rps.wins': -1 })
+      .limit(100);
+
+    // Format the data for the frontend
+    const leaderboardData = users.map(user => ({
+      username: user.name,
+      gameStats: user.stats || {
+        tictactoe: { gamesPlayed: 0, wins: 0, draws: 0, losses: 0 },
+        rps: { gamesPlayed: 0, wins: 0, draws: 0, losses: 0 }
+      }
+    }));
+
+    res.json(leaderboardData);
+  } catch (error) {
+    console.error('Error fetching leaderboard:', error);
+    res.status(500).json({ message: 'Error fetching leaderboard data' });
+  }
+});
+
 module.exports = router; 
