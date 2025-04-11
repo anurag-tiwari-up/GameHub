@@ -8,7 +8,8 @@
 }
 
 .dark-mode .profile-container {
-  background-color: #4F1C51;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .profile-header {
@@ -32,6 +33,10 @@
   font-weight: bold;
 }
 
+.dark-mode .profile-header h1 {
+  color: #fff;
+}
+
 .edit-button, .logout-button {
   padding: 0.75rem 2rem;
   border: none;
@@ -53,6 +58,15 @@
   transform: translateY(-2px);
 }
 
+.dark-mode .edit-button {
+  background-color: #6c5ce7;
+  color: white;
+}
+
+.dark-mode .edit-button:hover {
+  background-color: #5b4bc7;
+}
+
 .logout-button {
   background-color: #E53E3E;
   color: white;
@@ -61,6 +75,15 @@
 .logout-button:hover {
   background-color: #C53030;
   transform: translateY(-2px);
+}
+
+.dark-mode .logout-button {
+  background-color: #dc2626;
+  color: white;
+}
+
+.dark-mode .logout-button:hover {
+  background-color: #b91c1c;
 }
 
 .profile-form {
@@ -84,6 +107,10 @@
   letter-spacing: 0.5px;
 }
 
+.dark-mode .form-group label {
+  color: #fff;
+}
+
 .form-group input {
   padding: 0.75rem;
   border: 2px solid #eee;
@@ -92,10 +119,21 @@
   transition: all 0.2s ease;
 }
 
+.dark-mode .form-group input {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
 .form-group input:focus {
   outline: none;
   border-color: #ff9000;
   box-shadow: 0 0 0 3px rgba(255, 144, 0, 0.2);
+}
+
+.dark-mode .form-group input:focus {
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
 }
 
 .profile-info {
@@ -108,6 +146,11 @@
   border-radius: 12px;
 }
 
+.dark-mode .profile-info {
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 .info-group h3 {
   color: #666;
   font-size: 0.9rem;
@@ -116,11 +159,19 @@
   letter-spacing: 0.5px;
 }
 
+.dark-mode .info-group h3 {
+  color: #ccc;
+}
+
 .info-group p {
   font-size: 1.2rem;
   color: #333;
   margin: 0;
   font-weight: 500;
+}
+
+.dark-mode .info-group p {
+  color: #fff;
 }
 
 .game-stats {
@@ -132,6 +183,10 @@
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
   font-weight: bold;
+}
+
+.dark-mode .game-stats h2 {
+  color: #fff;
 }
 
 .stats-grid {
@@ -154,12 +209,21 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+.dark-mode .stat-card {
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 .stat-card h3 {
   color: #333;
   font-size: 1.3rem;
   margin-bottom: 1.5rem;
   font-weight: bold;
   text-align: center;
+}
+
+.dark-mode .stat-card h3 {
+  color: #fff;
 }
 
 .stat-item {
@@ -180,9 +244,17 @@
   font-weight: 500;
 }
 
+.dark-mode .stat-item span:first-child {
+  color: #ccc;
+}
+
 .stat-item span:last-child {
   font-weight: 600;
   color: #ff9000;
+}
+
+.dark-mode .stat-item span:last-child {
+  color: #4ecdc4;
 }
 
 .error-message,
@@ -200,7 +272,19 @@
   border: 1px solid #fecaca;
 }
 
+.dark-mode .error-message {
+  background-color: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
 .success-message {
+  background-color: #dcfce7;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}
+
+.dark-mode .success-message {
   background-color: #dcfce7;
   color: #16a34a;
   border: 1px solid #bbf7d0;
@@ -212,6 +296,11 @@
   background-color: black;
   border-radius: 12px;
   color: white;
+}
+
+.dark-mode .overall-stats {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .stat-summary {
@@ -234,10 +323,18 @@
   color: #999;
 }
 
+.dark-mode .summary-item span:first-child {
+  color: #ccc;
+}
+
 .summary-item span:last-child {
   font-size: 2rem;
   font-weight: bold;
   color: #ff9000;
+}
+
+.dark-mode .summary-item span:last-child {
+  color: #4ecdc4;
 }
 
 @media (max-width: 768px) {

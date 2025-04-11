@@ -22,9 +22,6 @@ const Profile = () => {
       ...prev,
       [name]: value
     }));
-    // Clear any previous error/success messages
-    setError('');
-    setSuccess('');
   };
 
   const handleSubmit = async (e) => {
@@ -75,13 +72,13 @@ const Profile = () => {
       <div className="profile-header">
         <div className="header-buttons">
           <button 
-            className="button primary-button"
+            className="edit-button"
             onClick={() => setIsEditing(true)}
           >
             Edit
           </button>
           <button 
-            className="button danger-button"
+            className="logout-button"
             onClick={handleLogout}
           >
             Logout
@@ -121,12 +118,12 @@ const Profile = () => {
             />
           </div>
           <div className="form-actions">
-            <button type="submit" className="button primary-button">
+            <button type="submit" className="edit-button">
               Save Changes
             </button>
             <button 
               type="button" 
-              className="button danger-button"
+              className="logout-button"
               onClick={() => {
                 setIsEditing(false);
                 setFormData({
