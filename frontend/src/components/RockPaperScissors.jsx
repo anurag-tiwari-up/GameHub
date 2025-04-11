@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import './RockPaperScissors.css';
@@ -71,18 +71,19 @@ const RockPaperScissors = () => {
       setGameOver(true);
       const updateStats = async () => {
         if (updatedScores.player === updatedScores.computer) {
-          setStatus("Series ended in a draw!");
+          setStatus("Game Over - Series ended in a draw!");
           await updateGameStats('rps', 'draw');
         } else {
           const finalWinner = updatedScores.player > updatedScores.computer ? 'player' : 'computer';
-          setStatus(`${finalWinner === 'player' ? 'You' : 'Computer'} wins the series!`);
+          setStatus(`Game Over - ${finalWinner === 'player' ? 'You' : 'Computer'} win the series! (Final Score: You: ${updatedScores.player}, Computer: ${updatedScores.computer})`);
           await updateGameStats('rps', finalWinner === 'player' ? 'win' : 'lose');
         }
       };
       updateStats();
     } else {
       // Current match is over but series continues
-      setStatus(`Match ${matchNumber}: ${matchWinner === 'draw' ? "It's a draw!" : `${matchWinner === 'player' ? 'You' : 'Computer'} wins!`} (Score: You: ${updatedScores.player}, Computer: ${updatedScores.computer})`);
+      setStatus(`Match ${matchNumber} complete - Starting next match in 1 second...`);
+      setTimeout(startNextMatch, 1000);
     }
   };
 
@@ -104,21 +105,9 @@ const RockPaperScissors = () => {
       >
         ← Back to Games
       </button>
-      <h2>Rock Paper Scissors</h2>
+      <h2>Rock Paper Scissors (Best of 3)</h2>
       
-      <div className="score-board">
-        <div className="score-display">
-          <span className="match-info">Match {matchNumber}/3</span>
-          <span className="score">You {scores.player} - {scores.computer} CPU</span>
-        </div>
-        {status && <div className="status">{
-          gameOver 
-            ? status 
-            : result 
-              ? `${result === 'draw' ? "Draw" : result === 'player' ? "You win" : "CPU wins"}`
-              : ''
-        }</div>}
-      </div>
+      <div className="status">{status || `Match ${matchNumber} of 3 - Your turn`}</div>
       
       <div className="choices">
         {choices.map((choice) => (
@@ -126,7 +115,7 @@ const RockPaperScissors = () => {
             key={choice}
             className={`choice-btn ${choice}`}
             onClick={() => handleChoice(choice)}
-            disabled={playerChoice !== null && !result || gameOver}
+            disabled={playerChoice !== null || gameOver}
           >
             {choice}
           </button>
@@ -137,33 +126,30 @@ const RockPaperScissors = () => {
         <div className="result">
           <div className="choices-display">
             <div className="choice">
-              <h3>Your Choice</h3>
+              <h3>You</h3>
               <div className={`choice-icon ${playerChoice}`}>{playerChoice}</div>
             </div>
             <div className="choice">
-              <h3>Computer's Choice</h3>
+              <h3>Computer</h3>
               <div className={`choice-icon ${computerChoice}`}>{computerChoice}</div>
             </div>
           </div>
           <div className={`result-message ${result}`}>
             {result === 'draw' ? "It's a draw!" : `You ${result === 'player' ? 'win' : 'lose'}!`}
           </div>
-          {!gameOver && result && (
-            <button className="next-round" onClick={startNextMatch}>
-              Next Match
-            </button>
-          )}
         </div>
       )}
 
       <div className="game-controls">
-        <button className="reset-button" onClick={resetGame}>
-          New Game
-        </button>
         {gameOver && (
-          <button className="new-match-button" onClick={resetGame}>
-            New Match Series
-          </button>
+          <>
+            <button className="control-button" onClick={resetGame}>
+              New Game
+            </button>
+            <button className="control-button" onClick={() => navigate('/')}>
+              Back to Menu
+            </button>
+          </>
         )}
       </div>
     </div>

@@ -115,7 +115,6 @@ const Game = ({ mode, onBack }) => {
       setWinner(gameWinner);
       updateMatchScore(gameWinner);
 
-      // Check if the match series is over
       const updatedScores = {
         ...scores,
         [gameWinner]: gameWinner !== 'draw' ? scores[gameWinner] + 1 : scores[gameWinner]
@@ -127,13 +126,15 @@ const Game = ({ mode, onBack }) => {
         const updateStats = async () => {
           const finalWinner = updatedScores.X > updatedScores.O ? 'X' : 'O';
           if (updatedScores.X === updatedScores.O) {
-            setStatus("Series ended in a draw!");
+            setStatus("Game Over - Series ended in a draw!");
             await updateGameStats('tictactoe', 'draw');
           } else {
-            setStatus(`${finalWinner} wins the series!`);
-            if ((finalWinner === 'X' && mode === 'bot') || 
-                (finalWinner === 'X' && mode === 'human' && xIsNext) || 
-                (finalWinner === 'O' && mode === 'human' && !xIsNext)) {
+            const winnerText = (finalWinner === 'X' && mode === 'bot') || 
+                             (finalWinner === 'X' && mode === 'human' && xIsNext) || 
+                             (finalWinner === 'O' && mode === 'human' && !xIsNext) 
+                             ? "You" : "Opponent";
+            setStatus(`Game Over - ${winnerText} win the series! (Final Score: You: ${updatedScores.X}, Opponent: ${updatedScores.O})`);
+            if (winnerText === "You") {
               await updateGameStats('tictactoe', 'win');
             } else {
               await updateGameStats('tictactoe', 'lose');
@@ -143,10 +144,14 @@ const Game = ({ mode, onBack }) => {
         updateStats();
       } else {
         // Current match is over but series continues
-        setStatus(`Match ${matchNumber}: ${gameWinner === 'draw' ? "It's a draw!" : `${gameWinner} wins!`} (Score: X: ${updatedScores.X}, O: ${updatedScores.O})`);
+        setStatus(`Match ${matchNumber} complete - Starting next match in 1 second...`);
+        setTimeout(startNextMatch, 1000);
       }
     } else if (!gameWinner) {
-      setStatus(`Match ${matchNumber} - Next player: ${xIsNext ? 'X' : 'O'} (Score: X: ${scores.X}, O: ${scores.O})`);
+      const turnText = (xIsNext && mode === 'bot') || 
+                      (xIsNext && mode === 'human') 
+                      ? "Your turn" : "Opponent's turn";
+      setStatus(`Match ${matchNumber} of 3 - ${turnText}`);
     }
   }, [board, xIsNext, updateGameStats, mode, winner, scores, matchNumber]);
 
@@ -191,22 +196,16 @@ const Game = ({ mode, onBack }) => {
         ))}
       </div>
       <div className="game-controls">
-        {winner && !gameOver && (
-          <button className="control-button" onClick={startNextMatch}>
-            Next Match
-          </button>
+        {gameOver && (
+          <>
+            <button className="control-button" onClick={resetGame}>
+              New Game
+            </button>
+            <button className="control-button" onClick={onBack}>
+              Back to Menu
+            </button>
+          </>
         )}
-        <button className="control-button" onClick={resetGame}>
-          New Game
-        </button>
-        <button className="control-button" onClick={onBack}>
-          Back to Menu
-        </button>
-      </div>
-      <div className="score-board">
-        <h3>Score</h3>
-        <p>X: {scores.X} - O: {scores.O}</p>
-        <p>Match {matchNumber} of 3</p>
       </div>
     </div>
   );

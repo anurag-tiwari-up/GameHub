@@ -20,14 +20,15 @@
 }
 
 .game-card {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 0.5rem;
-  padding: 2rem;
+  background-color: rgba(255, 230, 230, 0.8);
+  border-radius: 12px;
+  padding: 20px;
   text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
-  transition: all 0.3s;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,25 +38,27 @@
 
 .game-card:hover {
   transform: translateY(-2px);
-  background-color: var(--hover-bg);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  background-color: rgba(255, 230, 230, 0.9);
 }
 
 .game-icon {
   font-size: 3rem;
   margin-bottom: 1rem;
+  color: #4a90e2;
 }
 
 .game-card h2 {
-  color: var(--text-color);
+  color: #333;
   margin-bottom: 0.5rem;
   font-size: 1.5rem;
 }
 
 .game-card p {
-  color: var(--text-color);
+  color: #666;
   margin: 0;
   font-size: 1rem;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .games-footer {
@@ -65,19 +68,44 @@
 }
 
 .leaderboard-button {
-  background-color: var(--primary-color);
+  background-color: #4a90e2;
   color: white;
   padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 0.375rem;
+  border-radius: 6px;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.3s;
   min-width: 200px;
 }
 
 .leaderboard-button:hover {
-  background-color: var(--primary-hover);
+  background-color: #357abd;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark mode styles */
+.dark-mode .game-card {
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .game-card:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.dark-mode .game-card h2 {
+  color: #fff;
+}
+
+.dark-mode .game-card p {
+  color: #fff;
+  opacity: 0.8;
+}
+
+.dark-mode .game-icon {
+  color: #4ecdc4;
 }
 
 @media (max-width: 768px) {

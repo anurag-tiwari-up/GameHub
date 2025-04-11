@@ -3,10 +3,15 @@
   margin: 2rem auto;
   padding: 2rem;
   text-align: center;
+  background-color: rgba(255, 240, 240, 0.8);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .mode-selection h2 {
-  color: var(--text-color);
+  color: #333;
   margin-bottom: 2rem;
   font-size: 2rem;
 }
@@ -19,9 +24,9 @@
 }
 
 .mode-button {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 0.5rem;
+  background: rgba(255, 240, 240, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
   padding: 2rem;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -30,35 +35,38 @@
   align-items: center;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 .mode-button:hover {
   transform: translateY(-2px);
-  background-color: var(--hover-bg);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  background-color: rgba(255, 240, 240, 1);
 }
 
 .mode-icon {
   font-size: 3rem;
   margin-bottom: 1rem;
+  color: #4a90e2;
 }
 
 .mode-button h3 {
-  color: var(--text-color);
+  color: #333;
   margin: 0.5rem 0;
   font-size: 1.5rem;
 }
 
 .mode-button p {
-  color: var(--text-color);
+  color: #666;
   margin: 0;
   font-size: 1rem;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .back-button {
-  background-color: transparent;
-  color: var(--primary-color);
-  border: 2px solid var(--primary-color);
+  background-color: #4a90e2;
+  color: white;
+  border: none;
   padding: 0.75rem 2rem;
   border-radius: 6px;
   font-size: 1rem;
@@ -67,6 +75,67 @@
 }
 
 .back-button:hover {
-  background-color: var(--primary-color);
-  color: white;
+  background-color: #357abd;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark mode styles */
+.dark-mode .mode-selection {
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .mode-selection h2 {
+  color: #fff;
+}
+
+.dark-mode .mode-button {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .mode-button:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.dark-mode .mode-button h3 {
+  color: #fff;
+}
+
+.dark-mode .mode-button p {
+  color: #fff;
+  opacity: 0.8;
+}
+
+.dark-mode .mode-icon {
+  color: #4ecdc4;
+}
+
+@media (max-width: 768px) {
+  .mode-selection {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+
+  .mode-buttons {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .mode-button {
+    padding: 1.5rem;
+  }
+
+  .mode-icon {
+    font-size: 2.5rem;
+  }
+
+  .mode-button h3 {
+    font-size: 1.25rem;
+  }
+
+  .mode-button p {
+    font-size: 0.875rem;
+  }
 } 

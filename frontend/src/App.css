@@ -12,10 +12,10 @@
 :root {
   --bg-color: #f5f5f5;
   --text-color: #333;
-  --header-bg: #ffffff;
-  --card-bg: #FCC6FF;
+  --header-bg: rgba(255, 230, 230, 0.8);
+  --card-bg: rgba(255, 230, 230, 0.8);
   --border-color: #e2e8f0;
-  --hover-bg: #FCC6FF;
+  --hover-bg: rgba(255, 230, 230, 0.9);
   --primary-color: #4299E1;
   --primary-hover: #3182CE;
   --danger-color: #E53E3E;
@@ -26,7 +26,7 @@
 .dark-mode {
   --bg-color: #210F37;
   --text-color: #ffffff;
-  --header-bg: #4F1C51;
+  --header-bg: rgba(0, 0, 0, 0.6);
   --card-bg: #4F1C51;
   --border-color: #A55B4B;
   --hover-bg: #4F1C51;
