@@ -45,14 +45,6 @@ const GamesSelection = () => {
           </div>
         ))}
       </div>
-      <footer className="games-footer">
-        <button 
-          className="leaderboard-button"
-          onClick={() => navigate('/leaderboard')}
-        >
-          View Leaderboard 🏆
-        </button>
-      </footer>
     </div>
   );
 };

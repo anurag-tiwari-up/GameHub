@@ -1,0 +1,178 @@
+.App-header {
+  background-color: var(--header-bg);
+  padding: 0.5rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.navbar-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.site-logo {
+  font-size: 2rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+  line-height: 1;
+}
+
+.logo-first {
+  color: #4A5568;
+}
+
+.logo-second {
+  color: #6c5ce7;
+}
+
+.theme-toggle,
+.hamburger-button {
+  width: 32px !important;
+  min-width: 32px !important;
+  height: 32px;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+/* Hide hamburger button by default */
+.hamburger-button {
+  display: none;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  pointer-events: none;
+}
+
+.mobile-menu.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.mobile-menu-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 100vh;
+  background-color: var(--header-bg);
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transform: translateX(100%);
+  transition: transform 0.3s;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  pointer-events: auto;
+}
+
+.mobile-menu.open .mobile-menu-content {
+  transform: translateX(0);
+}
+
+.mobile-menu-content .button {
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.mobile-menu-content .button:hover {
+  background-color: var(--button-hover);
+}
+
+/* Dark mode styles for mobile menu */
+.dark-mode .mobile-menu-content {
+  background-color: var(--header-bg);
+}
+
+.dark-mode .mobile-menu-content .button {
+  color: var(--text-color);
+}
+
+.dark-mode .mobile-menu-content .button:hover {
+  background-color: var(--button-hover);
+}
+
+/* Dark mode styles */
+.dark-mode .App-header {
+  background-color: var(--header-bg);
+}
+
+.dark-mode .site-logo {
+  color: #fff;
+}
+
+.dark-mode .logo-first {
+  color: #ccc;
+}
+
+.dark-mode .logo-second {
+  color: #a29bfe;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .App-header {
+    padding: 0.5rem 0;
+  }
+
+  .navbar-links {
+    display: none;
+  }
+
+  /* Show hamburger button only on mobile */
+  .hamburger-button {
+    display: flex;
+  }
+
+  .site-logo {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-logo {
+    font-size: 1.5rem;
+  }
+} 

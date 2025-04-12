@@ -61,30 +61,6 @@
   opacity: 0.9;
 }
 
-.games-footer {
-  margin-top: 2rem;
-  text-align: center;
-  padding: 1rem;
-}
-
-.leaderboard-button {
-  background-color: #4a90e2;
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s;
-  min-width: 200px;
-}
-
-.leaderboard-button:hover {
-  background-color: #357abd;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
 /* Dark mode styles */
 .dark-mode .game-card {
   background-color: rgba(0, 0, 0, 0.6);
@@ -139,13 +115,5 @@
 
   .game-card p {
     font-size: 0.875rem;
-  }
-
-  .games-footer {
-    margin-top: 1.5rem;
-  }
-
-  .leaderboard-button {
-    min-width: 150px;
   }
 } 
