@@ -14,11 +14,29 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    // Create new user
+    // Create new user with initialized stats
     const user = new User({
       name,
       email,
-      password
+      password,
+      stats: {
+        tictactoe: {
+          gamesPlayed: 0,
+          wins: 0,
+          draws: 0,
+          losses: 0
+        },
+        rps: {
+          gamesPlayed: 0,
+          wins: 0,
+          draws: 0,
+          losses: 0
+        },
+        snake: {
+          gamesPlayed: 0,
+          highScore: 0
+        }
+      }
     });
 
     await user.save();
@@ -115,6 +133,10 @@ router.get('/me', async (req, res) => {
           wins: 0,
           draws: 0,
           losses: 0
+        },
+        snake: {
+          gamesPlayed: 0,
+          highScore: 0
         }
       };
       await user.save();
@@ -136,33 +158,84 @@ router.put('/stats', async (req, res) => {
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
-    const { gameType, result } = req.body;
-    console.log('Updating stats:', { gameType, result });
+    const { gameType, result, score } = req.body;
+    console.log('Updating stats:', { gameType, result, score });
 
-    // Find user and update stats
-    const update = {
-      $inc: {
-        [`stats.${gameType}.gamesPlayed`]: 1
+    // First, get the current user to check their stats
+    const user = await User.findById(decoded.userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Initialize stats if they don't exist
+    if (!user.stats) {
+      user.stats = {
+        tictactoe: { gamesPlayed: 0, wins: 0, draws: 0, losses: 0 },
+        rps: { gamesPlayed: 0, wins: 0, draws: 0, losses: 0 },
+        snake: { gamesPlayed: 0, highScore: 0 }
+      };
+      await user.save();
+    }
+
+    // Initialize specific game stats if they don't exist
+    if (!user.stats[gameType]) {
+      if (gameType === 'snake') {
+        user.stats[gameType] = { gamesPlayed: 0, highScore: 0 };
+      } else {
+        user.stats[gameType] = { gamesPlayed: 0, wins: 0, draws: 0, losses: 0 };
       }
-    };
+      await user.save();
+    }
+
+    // Prepare the update
+    const update = {};
 
     // Update specific result counter
     if (result === 'win') {
-      update.$inc[`stats.${gameType}.wins`] = 1;
+      update.$inc = {
+        [`stats.${gameType}.gamesPlayed`]: 1,
+        [`stats.${gameType}.wins`]: 1
+      };
     } else if (result === 'draw') {
-      update.$inc[`stats.${gameType}.draws`] = 1;
+      update.$inc = {
+        [`stats.${gameType}.gamesPlayed`]: 1,
+        [`stats.${gameType}.draws`]: 1
+      };
     } else if (result === 'lose') {
-      update.$inc[`stats.${gameType}.losses`] = 1;
+      update.$inc = {
+        [`stats.${gameType}.gamesPlayed`]: 1,
+        [`stats.${gameType}.losses`]: 1
+      };
+    } else if (result === 'gamesPlayed') {
+      // For snake game, just increment games played
+      update.$inc = {
+        [`stats.${gameType}.gamesPlayed`]: 1
+      };
+    } else if (result === 'highScore' && gameType === 'snake' && score) {
+      // For snake game high score
+      const currentHighScore = user.stats.snake.highScore || 0;
+      console.log('Checking high score:', { currentHighScore, newScore: score });
+      if (score > currentHighScore) {
+        console.log('New high score! Updating from', currentHighScore, 'to', score);
+        update.$set = {
+          [`stats.${gameType}.highScore`]: score
+        };
+      }
+      // Always increment games played for snake game
+      update.$inc = {
+        [`stats.${gameType}.gamesPlayed`]: 1
+      };
     }
 
-    const user = await User.findByIdAndUpdate(
+    // Update the user
+    const updatedUser = await User.findByIdAndUpdate(
       decoded.userId,
       update,
       { new: true }
     ).select('-password');
 
-    console.log('Updated user:', user);
-    res.json(user);
+    console.log('Updated user:', updatedUser);
+    res.json(updatedUser);
   } catch (error) {
     console.error('Error updating stats:', error);
     res.status(500).json({ message: 'Error updating stats' });

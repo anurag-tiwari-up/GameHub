@@ -1,5 +1,5 @@
-const API_URL = 'https://gamehub-backend-sjzb.onrender.com/api';
-// const API_URL = 'http://localhost:5000/api';
+// const API_URL = 'https://gamehub-backend-sjzb.onrender.com/api';
+const API_URL = 'http://localhost:5000/api';
 
 export const register = async (userData) => {
   const response = await fetch(`${API_URL}/auth/register`, {
@@ -77,15 +77,15 @@ export const updateUser = async (token, userData) => {
   return response.json();
 };
 
-export const updateGameStats = async (token, gameType, result) => {
-  console.log('Making API request:', { gameType, result });
+export const updateGameStats = async (token, gameType, result, score = 0) => {
+  console.log('Making API request:', { gameType, result, score });
   const response = await fetch(`${API_URL}/auth/stats`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`,
     },
-    body: JSON.stringify({ gameType, result }),
+    body: JSON.stringify({ gameType, result, score }),
   });
 
   if (!response.ok) {

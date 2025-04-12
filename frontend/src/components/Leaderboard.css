@@ -191,6 +191,20 @@
   color: white;
 }
 
+.leaderboard-header .games-played,
+.leaderboard-row .games-played {
+  flex: 1;
+  text-align: center;
+  font-weight: bold;
+  color: #666;
+  font-family: monospace;
+  font-size: 1.1em;
+}
+
+.leaderboard-row .games-played {
+  color: #333;
+}
+
 /* Mobile view */
 @media (max-width: 768px) {
   .leaderboard {
@@ -217,6 +231,12 @@
     grid-template-columns: 0.5fr 1.5fr 1fr 1fr;
     font-size: 0.9rem;
     padding: 0.75rem;
+  }
+
+  .leaderboard-header .games-played,
+  .leaderboard-row .games-played {
+    flex: 1;
+    text-align: center;
   }
 
   .stats {
@@ -350,4 +370,12 @@
 .dark-mode .sort-btn.active {
   background-color: #6c5ce7;
   color: white;
+}
+
+.dark-mode .leaderboard-header .games-played {
+  color: #ccc;
+}
+
+.dark-mode .leaderboard-row .games-played {
+  color: #fff;
 } 

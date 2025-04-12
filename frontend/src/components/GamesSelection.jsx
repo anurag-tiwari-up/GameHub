@@ -16,6 +16,12 @@ const GamesSelection = () => {
       name: 'Rock Paper Scissors',
       description: 'Test your luck against the computer',
       image: '✊'
+    },
+    {
+      id: 'snake',
+      name: 'Snake',
+      description: 'Classic snake game with modern controls',
+      image: '🐍'
     }
   ];
 

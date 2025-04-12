@@ -31,6 +31,10 @@ const userSchema = new mongoose.Schema({
       wins: { type: Number, default: 0 },
       draws: { type: Number, default: 0 },
       losses: { type: Number, default: 0 }
+    },
+    snake: {
+      gamesPlayed: { type: Number, default: 0 },
+      highScore: { type: Number, default: 0 }
     }
   },
   createdAt: {

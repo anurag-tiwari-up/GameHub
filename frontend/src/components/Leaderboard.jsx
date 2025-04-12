@@ -14,7 +14,8 @@ const Leaderboard = () => {
   const games = [
     { id: 'all', name: 'All Games', icon: '🎮' },
     { id: 'tictactoe', name: 'Tic Tac Toe', icon: '❌' },
-    { id: 'rps', name: 'Rock Paper Scissors', icon: '✌️' }
+    { id: 'rps', name: 'Rock Paper Scissors', icon: '✌️' },
+    { id: 'snake', name: 'Snake', icon: '🐍' }
   ];
 
   useEffect(() => {
@@ -71,6 +72,11 @@ const Leaderboard = () => {
 
   // Sort players based on selected criteria
   const sortedPlayers = getFilteredStats().sort((a, b) => {
+    if (selectedGame === 'snake') {
+      const aHighScore = a.gameStats?.snake?.highScore || 0;
+      const bHighScore = b.gameStats?.snake?.highScore || 0;
+      return bHighScore - aHighScore;
+    }
     if (sortBy === 'totalGames') {
       return calculateTotalGames(b) - calculateTotalGames(a);
     }
@@ -81,6 +87,12 @@ const Leaderboard = () => {
   });
 
   const getPlayerStats = (player) => {
+    if (selectedGame === 'snake') {
+      return {
+        highScore: player.gameStats?.snake?.highScore || 0,
+        gamesPlayed: player.gameStats?.snake?.gamesPlayed || 0
+      };
+    }
     if (selectedGame === 'all') {
       const totalStats = Object.values(player.gameStats || {}).reduce(
         (acc, game) => ({
@@ -153,14 +165,28 @@ const Leaderboard = () => {
         >
           Sort by Games Played 🎮
         </button>
+        {selectedGame === 'snake' && (
+          <button
+            className={`sort-btn ${sortBy === 'highScore' ? 'active' : ''}`}
+            onClick={() => setSortBy('highScore')}
+          >
+            Sort by High Score 🏆
+          </button>
+        )}
       </div>
 
       <div className="leaderboard-content">
         <div className="leaderboard-header">
           <span className="rank">#</span>
           <span className="player">Player</span>
-          <span className="stats">W/L/D</span>
-          <span className="win-rate">Win Rate</span>
+          <span className="stats">
+            {selectedGame === 'snake' ? 'High Score' : 'W/L/D'}
+          </span>
+          {selectedGame === 'snake' ? (
+            <span className="games-played">Games Played</span>
+          ) : (
+            <span className="win-rate">Win Rate</span>
+          )}
         </div>
 
         <div className="leaderboard-body">
@@ -183,9 +209,17 @@ const Leaderboard = () => {
                   {isCurrentUser && <span className="current-user-tag">You</span>}
                 </span>
                 <span className="stats">
-                  {stats.wins}/{stats.losses}/{stats.draws}
+                  {selectedGame === 'snake' ? (
+                    stats.highScore
+                  ) : (
+                    `${stats.wins}/${stats.losses}/${stats.draws}`
+                  )}
                 </span>
-                <span className="win-rate">{winRate.toFixed(1)}%</span>
+                {selectedGame === 'snake' ? (
+                  <span className="games-played">{stats.gamesPlayed}</span>
+                ) : (
+                  <span className="win-rate">{winRate.toFixed(1)}%</span>
+                )}
               </div>
             );
           })}

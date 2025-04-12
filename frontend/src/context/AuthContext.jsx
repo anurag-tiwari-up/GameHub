@@ -68,14 +68,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const updateGameStats = async (gameType, result) => {
+  const updateGameStats = async (gameType, result, score = 0) => {
     try {
       const token = localStorage.getItem('token');
       if (!token) throw new Error('No authentication token found');
 
-      console.log('Updating game stats:', { gameType, result });
-      const updatedUser = await apiUpdateGameStats(token, gameType, result);
+      console.log('Updating game stats:', { gameType, result, score });
+      const updatedUser = await apiUpdateGameStats(token, gameType, result, score);
       console.log('Received updated user:', updatedUser);
+      console.log('User stats after update:', updatedUser.stats);
       setUser(updatedUser);
       console.log('New user state:', updatedUser);
     } catch (error) {

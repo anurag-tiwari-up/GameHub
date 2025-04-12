@@ -52,7 +52,8 @@ const Profile = () => {
   const getTotalGames = () => {
     const tictactoeGames = user?.stats?.tictactoe?.gamesPlayed || 0;
     const rpsGames = user?.stats?.rps?.gamesPlayed || 0;
-    return tictactoeGames + rpsGames;
+    const snakeGames = user?.stats?.snake?.gamesPlayed || 0;
+    return tictactoeGames + rpsGames + snakeGames;
   };
 
   const getTotalWins = () => {
@@ -214,6 +215,17 @@ const Profile = () => {
             <div className="stat-item">
               <span>Win Rate</span>
               <span>{calculateWinRate(user?.stats?.rps)}%</span>
+            </div>
+          </div>
+          <div className="stat-card">
+            <h3>Snake</h3>
+            <div className="stat-item">
+              <span>Games Played</span>
+              <span>{user?.stats?.snake?.gamesPlayed || 0}</span>
+            </div>
+            <div className="stat-item">
+              <span>High Score</span>
+              <span>{user?.stats?.snake?.highScore || 0}</span>
             </div>
           </div>
         </div>

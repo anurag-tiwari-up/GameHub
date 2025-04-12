@@ -7,6 +7,7 @@ import Signup from './components/Signup';
 import GamesSelection from './components/GamesSelection';
 import TicTacToeMode from './components/TicTacToeMode';
 import RockPaperScissors from './components/RockPaperScissors';
+import SnakeGame from './components/SnakeGame';
 import Profile from './components/Profile';
 import Leaderboard from './components/Leaderboard';
 import WelcomePage from './pages/WelcomePage';
@@ -110,6 +111,14 @@ const AppContent = () => {
               element={
                 <ProtectedRoute>
                   <RockPaperScissors />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/snake"
+              element={
+                <ProtectedRoute>
+                  <SnakeGame onBack={() => navigate('/')} />
                 </ProtectedRoute>
               }
             />
