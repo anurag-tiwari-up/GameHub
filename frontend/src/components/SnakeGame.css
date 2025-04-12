@@ -7,6 +7,8 @@
   max-width: 500px;
   margin: 0 auto;
   box-sizing: border-box;
+  overflow: hidden;
+  touch-action: none; /* Prevent default touch behaviors */
 }
 
 .game-header {
@@ -34,6 +36,8 @@
   position: relative;
   width: 100%;
   margin-bottom: 1rem;
+  overflow: hidden;
+  touch-action: none; /* Prevent default touch behaviors */
 }
 
 .game-canvas {
@@ -50,15 +54,6 @@
 
 .mobile-controls {
   display: none;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 0.5rem;
-  gap: 0.5rem;
-  flex-direction: column;
-  align-items: center;
-  z-index: 10;
 }
 
 .mobile-controls .control-button {
@@ -147,6 +142,8 @@
     padding: 0.5rem;
     max-width: 100%;
     height: 100vh;
+    overflow: hidden;
+    touch-action: none;
   }
 
   .game-header {
@@ -158,10 +155,6 @@
     max-height: calc(100vh - 200px);
   }
 
-  .mobile-controls {
-    display: flex;
-  }
-
   .game-controls {
     flex-direction: row;
     padding: 0.5rem;
@@ -171,6 +164,11 @@
   .control-button {
     flex: 1;
     max-width: 120px;
+  }
+
+  .game-container {
+    overflow: hidden;
+    touch-action: none;
   }
 }
 

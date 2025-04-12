@@ -133,61 +133,77 @@ const SnakeGame = () => {
     }
   };
 
-  const handleTouchStart = (e) => {
-    if (gameOver) return;
-    const touch = e.touches[0];
-    touchStartRef.current = {
-      x: touch.clientX,
-      y: touch.clientY
-    };
-    lastDirectionRef.current = direction;
-  };
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-  const handleTouchMove = (e) => {
-    if (gameOver || isPaused) return;
-    const touch = e.touches[0];
-    const deltaX = touch.clientX - touchStartRef.current.x;
-    const deltaY = touch.clientY - touchStartRef.current.y;
-
-    // Only change direction if the swipe distance exceeds the threshold
-    if (Math.abs(deltaX) > touchThreshold || Math.abs(deltaY) > touchThreshold) {
-      // Determine swipe direction based on the larger delta
-      if (Math.abs(deltaX) > Math.abs(deltaY)) {
-        if (deltaX > 0 && lastDirectionRef.current !== 'LEFT') {
-          setDirection('RIGHT');
-        } else if (deltaX < 0 && lastDirectionRef.current !== 'RIGHT') {
-          setDirection('LEFT');
-        }
-      } else {
-        if (deltaY > 0 && lastDirectionRef.current !== 'UP') {
-          setDirection('DOWN');
-        } else if (deltaY < 0 && lastDirectionRef.current !== 'DOWN') {
-          setDirection('UP');
-        }
-      }
-      // Reset touch start position to prevent multiple direction changes
+    const handleTouchStart = (e) => {
+      if (gameOver) return;
+      e.preventDefault();
+      const touch = e.touches[0];
       touchStartRef.current = {
         x: touch.clientX,
         y: touch.clientY
       };
-    }
-  };
+      lastDirectionRef.current = direction;
+    };
 
-  const handleTouchEnd = () => {
-    touchStartRef.current = { x: 0, y: 0 };
-  };
+    const handleTouchMove = (e) => {
+      if (gameOver || isPaused) return;
+      e.preventDefault();
+      const touch = e.touches[0];
+      const deltaX = touch.clientX - touchStartRef.current.x;
+      const deltaY = touch.clientY - touchStartRef.current.y;
 
-  const handleDirectionButton = (newDirection) => {
-    if (gameOver || isPaused) return;
-    if (
-      (newDirection === 'UP' && direction !== 'DOWN') ||
-      (newDirection === 'DOWN' && direction !== 'UP') ||
-      (newDirection === 'LEFT' && direction !== 'RIGHT') ||
-      (newDirection === 'RIGHT' && direction !== 'LEFT')
-    ) {
-      setDirection(newDirection);
+      if (Math.abs(deltaX) > touchThreshold || Math.abs(deltaY) > touchThreshold) {
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+          if (deltaX > 0 && lastDirectionRef.current !== 'LEFT') {
+            setDirection('RIGHT');
+          } else if (deltaX < 0 && lastDirectionRef.current !== 'RIGHT') {
+            setDirection('LEFT');
+          }
+        } else {
+          if (deltaY > 0 && lastDirectionRef.current !== 'UP') {
+            setDirection('DOWN');
+          } else if (deltaY < 0 && lastDirectionRef.current !== 'DOWN') {
+            setDirection('UP');
+          }
+        }
+        touchStartRef.current = {
+          x: touch.clientX,
+          y: touch.clientY
+        };
+      }
+    };
+
+    const handleTouchEnd = () => {
+      touchStartRef.current = { x: 0, y: 0 };
+    };
+
+    canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+    canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+    canvas.addEventListener('touchend', handleTouchEnd);
+
+    return () => {
+      canvas.removeEventListener('touchstart', handleTouchStart);
+      canvas.removeEventListener('touchmove', handleTouchMove);
+      canvas.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [direction, gameOver, isPaused]);
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyPress);
+    if (!gameOver && !isPaused) {
+      gameLoopRef.current = setInterval(() => {
+        moveSnake();
+        drawGame();
+      }, INITIAL_SPEED);
     }
-  };
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+      clearInterval(gameLoopRef.current);
+    };
+  }, [snake, food, direction, gameOver, isPaused]);
 
   const drawGame = () => {
     const canvas = canvasRef.current;
@@ -210,29 +226,6 @@ const SnakeGame = () => {
     ctx.fillStyle = '#FF5722';
     ctx.fillRect(food.x * CELL_SIZE, food.y * CELL_SIZE, CELL_SIZE - 1, CELL_SIZE - 1);
   };
-
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeyPress);
-    window.addEventListener('touchstart', handleTouchStart, { passive: false });
-    window.addEventListener('touchmove', handleTouchMove, { passive: false });
-    window.addEventListener('touchend', handleTouchEnd);
-    return () => {
-      window.removeEventListener('keydown', handleKeyPress);
-      window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchend', handleTouchEnd);
-    };
-  }, [direction, gameOver]);
-
-  useEffect(() => {
-    if (!gameOver && !isPaused) {
-      gameLoopRef.current = setInterval(() => {
-        moveSnake();
-        drawGame();
-      }, INITIAL_SPEED);
-    }
-    return () => clearInterval(gameLoopRef.current);
-  }, [snake, food, direction, gameOver, isPaused]);
 
   const resetGame = () => {
     setSnake([{ x: 10, y: 10 }]);
@@ -264,14 +257,6 @@ const SnakeGame = () => {
           height={GRID_SIZE * CELL_SIZE}
           className="game-canvas"
         />
-        <div className="mobile-controls">
-          <button className="control-button" onClick={() => handleDirectionButton('UP')}>↑</button>
-          <div className="horizontal-controls">
-            <button className="control-button" onClick={() => handleDirectionButton('LEFT')}>←</button>
-            <button className="control-button" onClick={() => handleDirectionButton('RIGHT')}>→</button>
-          </div>
-          <button className="control-button" onClick={() => handleDirectionButton('DOWN')}>↓</button>
-        </div>
       </div>
       <div className="game-controls">
         <button className="control-button" onClick={handlePause}>
@@ -283,7 +268,7 @@ const SnakeGame = () => {
       </div>
       <div className="instructions">
         {isMobile ? (
-          <p>Swipe or use the buttons to move. Collect food to grow!</p>
+          <p>Swipe to move. Collect food to grow!</p>
         ) : (
           <p>Use arrow keys to move. Collect food to grow!</p>
         )}
